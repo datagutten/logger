@@ -1,0 +1,15 @@
+{
+    "name": "datagutten/logger",
+    "description": "A simple logger",
+    "type": "library",
+    "license": "GPL-3.0-or-later",
+    "authors": [
+        {
+            "name": "datagutten",
+            "email": "datagutten@datagutten.net"
+        }
+    ],
+    "autoload": {
+        "classmap": ["logger.class.php"]
+    }
+}
