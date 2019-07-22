@@ -5,23 +5,26 @@ use Symfony\Component\Filesystem;
 class logger
 {
 	public $fp;
-	public $logpath='/home/logs';
-	function __construct($subdir)
+	public $logpath;
+	public $logfile;
+	function __construct($subdir, $logpath='/home/logs')
 	{
 	    $filesystem = new Filesystem\Filesystem();
-		$dir="{$this->logpath}/$subdir/".date('Y-m');
+		$dir="$logpath/$subdir/".date('Y-m');
 	    try {
             if (!file_exists($dir))
                 $filesystem->mkdir($dir);
+            $this->logpath = $logpath;
         }
         catch (Filesystem\Exception\IOException $e)
         {
-            $this->logpath = realpath('logs');
-            $dir="{$this->logpath}/$subdir/".date('Y-m');
+            $dir="logs/$subdir/".date('Y-m');
             $filesystem->mkdir($dir);
+            $this->logpath = realpath('logs');
+            $dir = realpath($dir);
         }
-
-		$this->fp=fopen($dir.'/'.date('Y-m-d').'.txt','a+'); //Open log file for appending
+        $this->logfile = $dir.'/'.date('Y-m-d').'.txt';
+		$this->fp=fopen($this->logfile,'a+'); //Open log file for appending
 	}
 	function writelog($loginfo)
 	{
