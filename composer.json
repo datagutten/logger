@@ -11,5 +11,8 @@
     ],
     "autoload": {
         "classmap": ["logger.class.php"]
+    },
+    "require": {
+        "symfony/filesystem": "^4.3"
     }
 }

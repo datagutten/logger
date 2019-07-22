@@ -1,14 +1,25 @@
 <?Php
+
+use Symfony\Component\Filesystem;
+
 class logger
 {
 	public $fp;
 	public $logpath='/home/logs';
 	function __construct($subdir)
 	{
+	    $filesystem = new Filesystem\Filesystem();
 		$dir="{$this->logpath}/$subdir/".date('Y-m');
-		if(!file_exists($dir))
-			mkdir($dir,0777,true); //Create folder
-		
+	    try {
+            if (!file_exists($dir))
+                $filesystem->mkdir($dir);
+        }
+        catch (Filesystem\Exception\IOException $e)
+        {
+            $filesystem->mkdir('logs');
+            $this->logpath = realpath('logs');
+        }
+
 		$this->fp=fopen($dir.'/'.date('Y-m-d').'.txt','a+'); //Open log file for appending
 	}
 	function writelog($loginfo)
