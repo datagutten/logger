@@ -18,6 +18,7 @@ class logger
         {
             $filesystem->mkdir('logs');
             $this->logpath = realpath('logs');
+            $dir="{$this->logpath}/$subdir/".date('Y-m');
         }
 
 		$this->fp=fopen($dir.'/'.date('Y-m-d').'.txt','a+'); //Open log file for appending
